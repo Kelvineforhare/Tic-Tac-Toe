@@ -10,16 +10,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
-public class Main extends Application {
+public class ApplicationController extends Application {
     private static Stage stage;
     private static BorderPane mainPane;
-    private static List<URL> screenQueue = new ArrayList<>(); //Make a queue
+    private static Stack<URL> screenStack = new Stack<>(); //Make a queue
     private static Map<URL, String> title = new HashMap<>();
     private static Node displayingNode;
 
@@ -31,14 +28,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Main.stage = stage;
+        ApplicationController.stage = stage;
         mainPane = getMainPane();
+        tryLoad(MenuController.class.getResource("Menu.fxml"));
         Scene scene = new Scene(mainPane);
         stage.setScene(scene);
         stage.show();
     }
 
-    private static void tryLoad(URL currentUrl, boolean rightDirection) {
+    public static void tryLoad(URL currentUrl) {
         try {
             Node nextNode = FXMLLoader.load(currentUrl);
             mainPane.setCenter(nextNode);
@@ -52,12 +50,15 @@ public class Main extends Application {
             alert.showAndWait();
             System.exit(0);
         }
+        screenStack.add(currentUrl);
     }
 
     private BorderPane getMainPane() throws IOException {
-        BorderPane pane = (BorderPane) FXMLLoader.load(Main.class.getResource("Main.fxml"));
+        BorderPane pane = (BorderPane) FXMLLoader.load(ApplicationController.class.getResource("Main.fxml"));
         return pane;
     }
+
+
 
    /* private void showMainView() {
         URL url = pack.Main.class.getResource("pack.Main.fxml");

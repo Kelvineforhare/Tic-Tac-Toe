@@ -48,14 +48,14 @@ public class ApplicationController extends Application {
             alert.setHeaderText("A Window cannot be opened");
             alert.setContentText("Restart application");
             alert.showAndWait();
+            e.printStackTrace();
             System.exit(0);
         }
         screenStack.add(currentUrl);
     }
 
     private BorderPane getMainPane() throws IOException {
-        BorderPane pane = (BorderPane) FXMLLoader.load(ApplicationController.class.getResource("Main.fxml"));
-        return pane;
+        return (BorderPane) FXMLLoader.load(Objects.requireNonNull(ApplicationController.class.getResource("Main.fxml")));
     }
 
 

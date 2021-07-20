@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -10,23 +11,26 @@
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pack.PreGameController">
    <left>
-      <VBox prefHeight="400.0" prefWidth="114.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Player1">
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </Label>
-            <Label text="Name:" />
-            <TextField fx:id="name" />
-            <Label text="Human or Computer:" />
-            <ChoiceBox fx:id="humanOrComputer" prefWidth="150.0" />
-            <Label text="Best Of:" />
-            <TextField />
-         </children>
+      <VBox prefHeight="444.0" prefWidth="114.0" BorderPane.alignment="CENTER">
+         <Label text="Player1">
+            <padding>
+               <Insets bottom="10.0" />
+            </padding>
+         </Label>
+         <Label text="Name:" />
+         <TextField fx:id="player1TextField" />
+         <Label text="Human or Computer:" />
+         <ChoiceBox fx:id="humanOrComputer" onAction="#humanOrComputer" prefWidth="150.0" />
+         <Label text="Best Of:" />
+         <TextField fx:id="bestOfTextField" />
+         <CheckBox fx:id="player1ReadyCheckBox" mnemonicParsing="false" onAction="#player1Ready" prefHeight="227.0" prefWidth="76.0" text="Ready">
+            <padding>
+               <Insets top="210.0" />
+            </padding>
+         </CheckBox>
       </VBox>
    </left>
    <bottom>
-      <Button alignment="BOTTOM_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Start" BorderPane.alignment="CENTER" />
+      <Button alignment="BOTTOM_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#start" text="Start" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

@@ -1,7 +1,9 @@
 package pack;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -26,6 +28,8 @@ public class ApplicationController extends Application {
         launch(args);
     }
 
+
+
     @Override
     public void start(Stage stage) throws Exception {
         ApplicationController.stage = stage;
@@ -42,6 +46,14 @@ public class ApplicationController extends Application {
             mainPane.setCenter(nextNode);
             stage.setTitle(title.get(currentUrl));
             displayingNode = FXMLLoader.load(currentUrl);
+            /*if(mainPane.getWidth() != 0 || mainPane.getHeight() != 0)
+            {
+
+                stage.setWidth(mainPane.getWidth()*2);
+                stage.setHeight(mainPane.getHeight()*2);
+            }*/
+            //BorderPane.setAlignment(nextNode, Pos.TOP_CENTER);
+
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Window error");
@@ -55,8 +67,10 @@ public class ApplicationController extends Application {
     }
 
     private BorderPane getMainPane() throws IOException {
-        return (BorderPane) FXMLLoader.load(Objects.requireNonNull(ApplicationController.class.getResource("Main.fxml")));
+        return FXMLLoader.load(Objects.requireNonNull(ApplicationController.class.getResource("Main.fxml")));
     }
+
+
 
 
 

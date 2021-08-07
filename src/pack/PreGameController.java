@@ -13,6 +13,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 ;
 import java.io.IOException;
@@ -55,7 +56,6 @@ public class PreGameController
         humanOrComputer.setItems(choices);
     }
 
-
     @FXML
     private void humanOrComputer(ActionEvent actionEvent)
     {
@@ -89,18 +89,30 @@ public class PreGameController
         if (player1TextField.getText().isBlank() || bestOfTextField.getText().isBlank() || humanOrComputer.getSelectionModel().getSelectedItem().isBlank())
         {
             //tell user to add it alert or by text
-        }
-        player1Name = player1TextField.getText();
-        try
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Information missing");
+            alert.setHeaderText("Fill out all boxes to continue");
+            alert.setContentText("Enter information");
+            alert.showAndWait();
+            player1ReadyCheckBox.setSelected(false);
+        }else
         {
-            bestOf = Integer.parseInt(bestOfTextField.getText());
-        }catch (NumberFormatException e){
-            //tell user to enter number
+            player1Name = player1TextField.getText();
+            try
+            {
+                bestOf = Integer.parseInt(bestOfTextField.getText());
+            }catch (NumberFormatException e){
+                //tell user to enter number
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Not an number");
+                alert.setHeaderText("Best of must be a number");
+                alert.setContentText("Enter a number in best of");
+                alert.showAndWait();
+                player1ReadyCheckBox.setSelected(false);
+            }
+            isPlayer2Human = "Human".equals(humanOrComputer.getSelectionModel().getSelectedItem());
         }
-
-        isPlayer2Human = "Human".equals(humanOrComputer.getSelectionModel().getSelectedItem());
         isPlayer1Ready = player1ReadyCheckBox.isSelected();
-        ;
     }
 
     @FXML
@@ -109,15 +121,23 @@ public class PreGameController
         if (player2TextField.getText().isBlank())
         {
             //tell user to add it alert or by text
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No name error");
+            alert.setHeaderText("Enter a name");
+            alert.setContentText("Player2 must enter a name");
+            alert.showAndWait();
+            player2ReadyCheckBox.setSelected(false);
+        }else
+        {
+            player2Name = player2TextField.getText();
         }
-        player2Name = player2TextField.getText();
         isPlayer2Ready = player2ReadyCheckBox.isSelected();
     }
 
     @FXML
     public void start(ActionEvent actionEvent)
     {
-        //check if both ready ticked
+        //check if both ready ticked if human picked*******
         if (isPlayer1Ready && isPlayer2Ready)
         {
             Player player1 = new Player(player1Name);
@@ -130,8 +150,10 @@ public class PreGameController
                 player2 = new ComputerPlayer();
             }
             GameLogic gameLogic = new GameLogic(player1, player2, bestOf);
+
+            ApplicationController.tryLoad(PreGameController.class.getResource("game.fxml"));
         }
-        System.out.println(player1Name + " " + player2Name + " " + bestOf + " " + humanOrComputer.getSelectionModel().getSelectedItem());
+        //System.out.println(player1Name + " " + player2Name + " " + bestOf + " " + humanOrComputer.getSelectionModel().getSelectedItem());
 
     }
 

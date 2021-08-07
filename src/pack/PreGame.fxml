@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pack.PreGameController">
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pack.PreGameController">
    <left>
-      <VBox prefHeight="444.0" prefWidth="114.0" BorderPane.alignment="CENTER">
+      <VBox minHeight="400.0" minWidth="114.0" BorderPane.alignment="CENTER">
          <Label text="Player1">
             <padding>
                <Insets bottom="10.0" />
@@ -23,14 +23,13 @@
          <ChoiceBox fx:id="humanOrComputer" onAction="#humanOrComputer" prefWidth="150.0" />
          <Label text="Best Of:" />
          <TextField fx:id="bestOfTextField" />
-         <CheckBox fx:id="player1ReadyCheckBox" mnemonicParsing="false" onAction="#player1Ready" prefHeight="227.0" prefWidth="76.0" text="Ready">
-            <padding>
-               <Insets top="210.0" />
-            </padding>
-         </CheckBox>
+         <CheckBox fx:id="player1ReadyCheckBox" mnemonicParsing="false" onAction="#player1Ready" text="Ready" />
       </VBox>
    </left>
    <bottom>
-      <Button alignment="BOTTOM_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#start" text="Start" BorderPane.alignment="CENTER" />
+      <Button alignment="CENTER" contentDisplay="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#start" text="Start" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin></Button>
    </bottom>
 </BorderPane>

@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="144.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pack.PreGameController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="144.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pack.PreGameController">
    <Label text="Player2">
       <padding>
          <Insets bottom="10.0" />
@@ -16,7 +16,7 @@
    <TextField fx:id="player2TextField" onAction="#player2Ready" />
    <CheckBox fx:id="player2ReadyCheckBox" mnemonicParsing="false" onAction="#player2Ready" text="Ready">
       <VBox.margin>
-         <Insets top="313.0" />
+         <Insets />
       </VBox.margin>
    </CheckBox>
 </VBox>

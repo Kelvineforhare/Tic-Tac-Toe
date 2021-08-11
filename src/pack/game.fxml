@@ -5,10 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pack.GameController">
-   <center>
-      <Pane fx:id="pane" onMouseClicked="#test3" prefHeight="300.0" prefWidth="300.0" BorderPane.alignment="CENTER_RIGHT" />
-   </center>
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pack.GameController">
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -30,4 +27,7 @@
          </children>
       </HBox>
    </top>
+   <left>
+      <Pane fx:id="pane" onMouseClicked="#test3" prefHeight="300.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
+   </left>
 </BorderPane>

@@ -150,6 +150,7 @@ public class PreGameController
                 player2 = new ComputerPlayer();
             }
             GameLogic gameLogic = new GameLogic(player1, player2, bestOf);
+            GameController.setGameLogic(gameLogic);
 
             ApplicationController.tryLoad(PreGameController.class.getResource("game.fxml"));
         }

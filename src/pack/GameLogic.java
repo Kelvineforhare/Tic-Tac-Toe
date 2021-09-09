@@ -96,12 +96,12 @@ public class GameLogic
     {
         int x = player1.getScore();
         int y = player2.getScore();
-        return !((bestOf - Math.max(x, y)) < Math.max(x, y));
+        return (bestOf - Math.max(x, y)) < Math.max(x, y);
     }
 
     /**
      * Gets the current players who's turn it is
-     * @return the players who's turn it is
+     * @return the player who's turn it is
      */
     public Player getCurrentPlayer()
     {
@@ -110,6 +110,19 @@ public class GameLogic
         }
         return player2;
     }
+
+    /**
+     * Gets the current players symbol who's turn it is
+     * @return the playerSymbol who's turn it is
+     */
+    public GameSymbols getCurrentPlayerSymbol()
+    {
+        if(isPlayer1){
+            return GameSymbols.X;
+        }
+        return GameSymbols.O;
+    }
+
 
     /**
      * Resets the board and which players turn it is
@@ -123,16 +136,23 @@ public class GameLogic
         isPlayer1 = true;
     }
 
+    public Player getPlayer1()
+    {
+        return player1;
+    }
+
+    public Player getPlayer2()
+    {
+        return player2;
+    }
+
+
     private Player getPlayerWin(GameSymbols winSymbol, GameSymbols winSymbol2)
     {
         if(winSymbol == GameSymbols.X || winSymbol2 == GameSymbols.X){
-            player1.incrementScore();
-            bestOf++;
             return player1;
         }
         else if(winSymbol == GameSymbols.O || winSymbol2 == GameSymbols.O){
-            player2.incrementScore();
-            bestOf++;
             return player2;
         }
         return null;
@@ -188,7 +208,7 @@ public class GameLogic
     /**
      * For visuals
      */
-    private void printBoard()
+    public void printBoard()
     {
         for (GameSymbols[] gameSymbols : gameBoard)
         {
@@ -204,7 +224,7 @@ public class GameLogic
 
         gameLogic.printBoard();
 
-        while (gameLogic.isGameOver())
+        while (!gameLogic.isGameOver())
         {
             if(gameLogic.checkHasForRoundWin()){
                 gameLogic.resetBoardAndPlayer();

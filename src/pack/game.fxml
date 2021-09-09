@@ -7,24 +7,24 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pack.GameController">
    <center>
-      <Pane fx:id="pane" onMouseClicked="#test3" prefHeight="300.0" prefWidth="300.0" BorderPane.alignment="CENTER_RIGHT" />
+      <Pane fx:id="pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#test3" onMouseEntered="#promptClick" onMouseExited="#unPromptClick" prefHeight="300.0" prefWidth="300.0" BorderPane.alignment="CENTER_RIGHT" />
    </center>
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Player1(Highlight when turn)" />
+                  <Label fx:id="player1" text="Player1(Highlight when turn)" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Score" />
+                  <Label fx:id="score" text="Score" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Player2" />
+                  <Label fx:id="player2" alignment="CENTER" contentDisplay="CENTER" text="Player2" />
                </children>
             </HBox>
          </children>

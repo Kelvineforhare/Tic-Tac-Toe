@@ -136,6 +136,11 @@ public class GameLogic
         isPlayer1 = true;
     }
 
+    public boolean isPlayer1Turn()
+    {
+        return isPlayer1;
+    }
+
     public Player getPlayer1()
     {
         return player1;

@@ -3,6 +3,7 @@ package pack;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -30,7 +31,6 @@ public class GameController
 
     private static GameLogic gameLogic;
     private int lines;
-    private boolean player1Turn;
 
     public static void setGameLogic(GameLogic gameLogic)
     {
@@ -44,7 +44,6 @@ public class GameController
         player2.setText("Player 2: " + gameLogic.getPlayer2().getName());
 
         player1.setStyle("-fx-background-color: firebrick");
-        player1Turn = true;
 
         score.setText("0 - 0");
 
@@ -52,38 +51,14 @@ public class GameController
         //tacoList.add(new Taco(i))
         //make variable in a loop or do above
         //1 for vertical and one for horizontal
-        int lines = 2;
-        this.lines = lines;
 
-
-        for(int i = 1; i <= lines;i++){
-            Line line = new Line();
-
-            line.startXProperty().bind(pane.widthProperty().divide(lines+1).multiply(i));
-            line.startYProperty().bind(pane.widthProperty().subtract(pane.widthProperty()));
-            line.endXProperty().bind(pane.widthProperty().divide(lines+1).multiply(i));
-            line.endYProperty().bind(pane.heightProperty());
-
-
-
-
-            Line line1 = new Line();
-
-            line1.startXProperty().bind(pane.heightProperty().subtract(pane.heightProperty()));
-            line1.startYProperty().bind(pane.heightProperty().divide(lines+1).multiply(i));
-            line1.endXProperty().bind(pane.widthProperty());
-            line1.endYProperty().bind(pane.heightProperty().divide(lines+1).multiply(i));
-
-
-            pane.getChildren().addAll(line,line1);
-        }
-
+        drawGameBoard();
     }
 
 
-
+    //issue with the swap colours
     @FXML
-    public void test3(javafx.scene.input.MouseEvent mouseEvent)
+    public void pressButton(javafx.scene.input.MouseEvent mouseEvent)
     {
         double x = mouseEvent.getX();
         double y = mouseEvent.getY();
@@ -110,33 +85,32 @@ public class GameController
         try
         {
             gameLogic.placeSymbol(ticTacX,ticTacY);
+
+            placeSymbol(symbol,ticTacX,ticTacY);
+
+            if(gameLogic.isPlayer1Turn()){
+                player1.setStyle(null);
+                player2.setStyle("-fx-background-color: firebrick");
+            }
+            else{
+                player2.setStyle(null);
+                player1.setStyle("-fx-background-color: firebrick");
+            }
+
         } catch (OutOfBoundException e)
         {
-            //Add alert box dude
+            //Add text on screen saying issue for both
             System.out.println("\n  Number too large enter within range");
         } catch (BoxTakenException e)
         {
             e.printStackTrace();
         }
 
-        placeSymbol(symbol,ticTacX,ticTacY);
-
         gameLogic.printBoard();
-
-        if(player1Turn){
-            player1.setStyle(null);
-            player2.setStyle("-fx-background-color: firebrick");
-        }
-        else{
-            player2.setStyle(null);
-            player1.setStyle("-fx-background-color: firebrick");
-        }
 
         if(gameLogic.checkHasForRoundWin()){
             player2.setStyle(null);
             player1.setStyle("-fx-background-color: firebrick");
-            //check game over (best of 3)
-            //Increment score board
             if(gameLogic.isGameOver()){
                 score.setText("0 - 0");
             }
@@ -145,61 +119,94 @@ public class GameController
                 score.setText(gameLogic.getPlayer1().getScore() + " - " + gameLogic.getPlayer2().getScore());
             }
             gameLogic.resetBoardAndPlayer();
+            resetSymbols();
             System.out.println("\n");
             gameLogic.printBoard();
         }
-
-
-        player1Turn = !player1Turn;
     }
 
     private void placeSymbol(GameSymbols gameSymbol,int x , int y)
     {
 
-        switch (gameSymbol){
-            case X:
-
-                System.out.println(x + "" + y);
-
+        switch (gameSymbol)
+        {
+            case X -> {
                 Line line = new Line();
-                //Maybe make width instrad of width property?
-                line.startXProperty().bind(pane.widthProperty().divide(lines + 1).multiply(y));
-                line.endXProperty().bind(pane.widthProperty().divide(lines + 1).multiply(y+1));
-                line.startYProperty().bind(pane.heightProperty().divide(lines + 1).multiply(x));
-                line.endYProperty().bind(pane.heightProperty().divide(lines + 1).multiply(x+1));
 
+                line.startXProperty().bind(pane.widthProperty().divide(lines + 1).multiply(y));
+                line.endXProperty().bind(pane.widthProperty().divide(lines + 1).multiply(y + 1));
+                line.startYProperty().bind(pane.heightProperty().divide(lines + 1).multiply(x));
+                line.endYProperty().bind(pane.heightProperty().divide(lines + 1).multiply(x + 1));
 
                 Line line2 = new Line();
 
-
-                line2.startXProperty().bind(pane.widthProperty().divide(lines + 1).multiply(y+1));
+                line2.startXProperty().bind(pane.widthProperty().divide(lines + 1).multiply(y + 1));
                 line2.endXProperty().bind(pane.widthProperty().divide(lines + 1).multiply(y));
                 line2.startYProperty().bind(pane.heightProperty().divide(lines + 1).multiply(x));
-                line2.endYProperty().bind(pane.heightProperty().divide(lines + 1).multiply(x+1));
+                line2.endYProperty().bind(pane.heightProperty().divide(lines + 1).multiply(x + 1));
+
+                pane.getChildren().addAll(line, line2);
+            }
+            case O -> {
+                double radiusChoice1 = pane.widthProperty().divide(lines + 1).get();
+                double radiusChoice2 = pane.heightProperty().divide(lines + 1).get();
 
 
-                pane.getChildren().addAll(line,line2);
+                Circle circle = new Circle();
 
-                break;
+                circle.centerXProperty().bind(pane.widthProperty().divide(lines + 1).multiply(y).add(pane.widthProperty().divide(lines + 1).multiply(y + 1)
+                        .subtract(pane.widthProperty().divide(lines + 1).multiply(y)).divide(2)));
 
-            case O :
-                double radiusChoice1 = pane.widthProperty().divide(lines + 1).multiply(1).get();
-                double radiusChoice2 = pane.heightProperty().divide(lines + 1).multiply(1).get();
-
-                double xCoordinate = pane.heightProperty().divide(lines + 1).multiply(y+ 1)
-                                        .subtract(pane.heightProperty().divide(lines + 1).multiply(y).doubleValue()).divide(2).get();
-
-                double yCoordinate = pane.widthProperty().divide(lines + 1).multiply(x+ 1)
-                        .subtract(pane.widthProperty().divide(lines + 1).multiply(x).doubleValue()).divide(2).get();
+                circle.centerYProperty().bind(pane.heightProperty().divide(lines + 1).multiply(x).add(pane.heightProperty().divide(lines + 1).multiply(x + 1)
+                        .subtract(pane.heightProperty().divide(lines + 1).multiply(x)).divide(2)));
 
 
-                //make circle bind to coordinate and fix where its placed maybe height and width the issue or x and y
-                Circle circle = new Circle(xCoordinate,yCoordinate,Math.min(radiusChoice1,radiusChoice2)/2);
+                if(Math.min(radiusChoice1, radiusChoice2) / 2 == radiusChoice1){
+                    circle.radiusProperty().bind(pane.widthProperty().divide(lines + 1).divide(2));
+                }
+                else{
+                    circle.radiusProperty().bind(pane.heightProperty().divide(lines + 1).divide(2));
+                }
+
                 pane.getChildren().addAll(circle);
-                break;
-
+            }
         }
 
+    }
+
+    private void resetSymbols()
+    {
+        pane.getChildren().clear();
+        drawGameBoard();
+    }
+
+    private void drawGameBoard()
+    {
+        int lines = 2;
+        this.lines = lines;
+
+
+        for(int i = 1; i <= lines;i++){
+            Line line = new Line();
+
+            line.startXProperty().bind(pane.widthProperty().divide(lines+1).multiply(i));
+            line.startYProperty().bind(pane.widthProperty().subtract(pane.widthProperty()));
+            line.endXProperty().bind(pane.widthProperty().divide(lines+1).multiply(i));
+            line.endYProperty().bind(pane.heightProperty());
+
+
+
+
+            Line line1 = new Line();
+
+            line1.startXProperty().bind(pane.heightProperty().subtract(pane.heightProperty()));
+            line1.startYProperty().bind(pane.heightProperty().divide(lines+1).multiply(i));
+            line1.endXProperty().bind(pane.widthProperty());
+            line1.endYProperty().bind(pane.heightProperty().divide(lines+1).multiply(i));
+
+
+            pane.getChildren().addAll(line,line1);
+        }
     }
 
 

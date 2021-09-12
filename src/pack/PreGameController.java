@@ -13,9 +13,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
 
-;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -138,7 +136,7 @@ public class PreGameController
     public void start(ActionEvent actionEvent)
     {
         //check if both ready ticked if human picked*******
-        if (isPlayer1Ready && isPlayer2Ready)
+        if (isPlayer1Ready && (isPlayer2Ready ||  !isPlayer2Human) )
         {
             Player player1 = new Player(player1Name);
             Player player2;
